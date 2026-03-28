@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import { getDB } from "../database/nativeDB.js";
 
-// 🔐 Generate Token
 const generateToken = (id, role) => {
   return jwt.sign(
     { id, role },
@@ -12,7 +11,6 @@ const generateToken = (id, role) => {
   );
 };
 
-// 📧 Nodemailer setup
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -21,12 +19,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// 🔢 Generate 6 digit code
 const generateCode = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
-// ✅ SEND VERIFICATION CODE
 export const sendVerificationCode = async (req, res) => {
   try {
     const db = getDB();
@@ -40,7 +36,6 @@ export const sendVerificationCode = async (req, res) => {
 
     const users = db.collection("users");
 
-    // Save code in DB (temporary)
     await users.updateOne(
       { email },
       {
@@ -52,7 +47,6 @@ export const sendVerificationCode = async (req, res) => {
       { upsert: true }
     );
 
-    // Send email
     await transporter.sendMail({
       from: `"KrishiPredict" <${process.env.EMAIL_USER}>`,
       to: email,
@@ -64,7 +58,7 @@ export const sendVerificationCode = async (req, res) => {
 
     res.json({
       message: "Verification code sent",
-      code, // ⚠️ remove this in production
+      code, 
     });
 
   } catch (error) {
@@ -73,7 +67,6 @@ export const sendVerificationCode = async (req, res) => {
   }
 };
 
-// ✅ REGISTER (with email verification)
 export const registerUser = async (req, res) => {
   try {
     const db = getDB();
@@ -97,7 +90,6 @@ export const registerUser = async (req, res) => {
 
     const userData = await users.findOne({ email });
 
-    // ✅ VERIFY CODE
     if (
       !userData ||
       userData.verificationCode !== verificationCode ||
@@ -108,14 +100,12 @@ export const registerUser = async (req, res) => {
       });
     }
 
-    // check if already registered (has password)
     if (userData.password) {
       return res.status(409).json({ message: "User already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // update user with full data
     await users.updateOne(
       { email },
       {
@@ -151,7 +141,6 @@ export const registerUser = async (req, res) => {
   }
 };
 
-// ✅ LOGIN
 export const loginUser = async (req, res) => {
   try {
     const db = getDB();
@@ -195,7 +184,6 @@ export const loginUser = async (req, res) => {
   }
 };
 
-// ✅ ADMIN LOGIN
 export const adminLogin = async (req, res) => {
   try {
     const db = getDB();
@@ -230,7 +218,6 @@ export const adminLogin = async (req, res) => {
   }
 };
 
-// ✅ GOOGLE LOGIN (ONLY IF USER EXISTS)
 export const googleLogin = async (req, res) => {
   try {
     const db = getDB();
@@ -244,21 +231,19 @@ export const googleLogin = async (req, res) => {
 
     const user = await users.findOne({ email });
 
-    // ❌ If user NOT found → block login
     if (!user) {
       return res.status(403).json({
         message: "Account not found. Please register first.",
       });
     }
 
-    // ✅ OPTIONAL: ensure user is verified (extra safety)
     if (user.verificationCode || user.codeExpires) {
       return res.status(403).json({
         message: "Please verify your email before login",
       });
     }
 
-    // ✅ SUCCESS LOGIN
+    //  SUCCESS LOGIN
     res.json({
       message: "Google login successful",
       token: generateToken(user._id, user.role),

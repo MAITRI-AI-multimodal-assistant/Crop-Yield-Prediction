@@ -1,6 +1,5 @@
 import Product from "../models/productModel.js";
 
-// ✅ GET ALL PRODUCTS
 export const getProducts = async (req, res) => {
   try {
     const { category, search } = req.query;
@@ -23,7 +22,6 @@ export const getProducts = async (req, res) => {
   }
 };
 
-// ✅ ADD PRODUCT (seller only)
 export const addProduct = async (req, res) => {
   try {
     const {
@@ -54,7 +52,6 @@ export const addProduct = async (req, res) => {
   }
 };
 
-// ✅ DELETE PRODUCT
 export const deleteProduct = async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
