@@ -13,7 +13,7 @@ const createAdmin = async () => {
     const db = getDB();
 
     const existing = await db.collection("user").findOne({
-      email: "admin@lpgiot.com"
+      email: "admin@crop.com"
     });
 
     if (existing) {
