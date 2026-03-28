@@ -78,3 +78,5 @@ npm run dev
 npm run build       # Output -> /dist
 npm run preview     # Preview production build locally
 ```
+# Crop-Yield-Prediction
+Jadavpur Hackathon
