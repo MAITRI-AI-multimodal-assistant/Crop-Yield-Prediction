@@ -24,7 +24,7 @@ const createAdmin = async () => {
     const hashedPassword = await bcrypt.hash("admin123", 10);
 
     await db.collection("user").insertOne({
-      email: "admin@lpgiot.com",
+      email: "admin@crop.com",
       password: hashedPassword,
       role: "admin"
     });
