@@ -10,7 +10,6 @@ googleLogin
 
 const router = express.Router();
 
-// 🔥 3 main routes
 router.post("/register", registerUser);   // all roles
 router.post("/login", loginUser);         // all roles
 router.post("/admin/login", adminLogin);  // only admin
