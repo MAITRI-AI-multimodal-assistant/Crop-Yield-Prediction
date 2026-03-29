@@ -29,10 +29,11 @@ export const addProduct = async (req, res) => {
       category,
       price,
       unit,
-      quantity,
+      qty, 
       seller,
       state,
       image,
+      badge
     } = req.body;
 
     const product = await Product.create({
@@ -40,10 +41,11 @@ export const addProduct = async (req, res) => {
       category,
       price,
       unit,
-      quantity,
+      quantity:qty,
       seller,
       state,
       image,
+      badge
     });
 
     res.status(201).json(product);
@@ -51,7 +53,6 @@ export const addProduct = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 export const deleteProduct = async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);

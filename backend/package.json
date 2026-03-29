@@ -16,7 +16,8 @@
   "description": "",
   "main": "api/index.js",
   "scripts": {
-    "dev": "node api/index.js"
+    "dev": "node api/index.js",
+    "seed:products": "node seeder/productsSeeder.js"
   },
   "keywords": [],
   "author": "",

@@ -23,7 +23,7 @@ function StatCard({ label, value, delta, color, glow }) {
   );
 }
 
-const EMPTY_PRODUCT = { name:"", category:"crops", price:"", unit:"kg", qty:"", state:"", badge:"", img:"" };
+const EMPTY_PRODUCT = { name:"", category:"crops", price:"", unit:"kg", qty:"", state:"", badge:"", image:"" };
 const CATS_OPTIONS  = ["crops","seeds","fertilisers","equipment","pesticides"];
 const BADGE_OPTIONS = ["","Organic","Fresh","Premium","Certified","Govt. Rate"];
 
@@ -335,7 +335,7 @@ export default function AdminDashboard() {
                     </div>
                     <div>
                       <label className="block text-[0.68rem] font-bold uppercase tracking-widest text-gray-500 mb-1">Image URL</label>
-                      <input name="img" value={formData.img} onChange={handleFormChange} placeholder="https://…" className={inputCls} />
+                      <input name="image" value={formData.image} onChange={handleFormChange} placeholder="https://…" className={inputCls} />
                     </div>
                     <div className="sm:col-span-2 flex justify-end gap-3 pt-1">
                       <button type="button" onClick={() => { setShowForm(false); setFormData(EMPTY_PRODUCT); setFormError(""); }}
