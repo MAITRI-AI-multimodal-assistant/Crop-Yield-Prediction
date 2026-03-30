@@ -1,0 +1,12 @@
+Flask==3.0.3
+Flask-Cors==4.0.1
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+gunicorn
+lightgbm
+xgboost 
+joblib
+gunicorn
